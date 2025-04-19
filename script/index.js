@@ -21,7 +21,7 @@ function displayCategories(categories){
         // create element
         const categoryDiv = document.createElement("div");
         categoryDiv.innerHTML = `
-        <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
+        <button onclick = "loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">${cat.category}</button>
         `
         // Append the Element
         categoryContainer.append(categoryDiv);
@@ -52,9 +52,19 @@ function loadVideos(){
     .then((data) => displayVideos(data.videos));
 }
 
+const loadCategoryVideos = (id) =>{
+  
+  const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+  // console.log(url);
+  fetch(url)
+  .then((res) => res.json())
+  .then((data) => displayVideos(data.category));
+}
+
 const displayVideos = (videos) => {
     // console.log(videos);
     const videoContainer = document.getElementById("video-container")
+    videoContainer.innerHTML="";
     videos.forEach((video) =>{
         // console.log(video);
         //create div element 
@@ -89,4 +99,4 @@ const displayVideos = (videos) => {
 };
 
 loadCategories();
-loadVideos();
+// loadVideos();
